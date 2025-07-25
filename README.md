@@ -12,7 +12,7 @@
 ## 🚀 Установка
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/YOUR_USER/forks-life-node/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/ixbaseANT/forks-life-node/main/install.sh)
 ```
 
 ## 🔗 Стартовая страница
