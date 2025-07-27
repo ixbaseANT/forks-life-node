@@ -53,7 +53,7 @@ sudo apt install -y php php-sqlite3 php-fpm php-curl sqlite3
 
 echo "📦 Загрузка и распаковка Fork Life..."
 sudo chown -R www-data:www-data /var/www/html
-wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
+sudo wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
 sudo tar -xzf fork.tar.gz
 sudo rm -f fork.tar.gz
 sudo chown -R www-data:www-data /var/www/html/fork
