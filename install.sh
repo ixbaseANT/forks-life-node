@@ -51,7 +51,7 @@ sudo systemctl restart nginx
 echo "📦 Установка PHP, SQLite и зависимостей..."
 sudo apt install -y php php-sqlite3 php-fpm php-curl sqlite3
 
-echo "📦 Загрузка и распаковка Forks Life..."
+echo "📦 Загрузка и распаковка Fork Life..."
 sudo chown -R www-data:www-data /var/www/html
 wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
 sudo tar -xzf fork.tar.gz
