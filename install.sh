@@ -52,13 +52,14 @@ echo "📦 Установка PHP, SQLite и зависимостей..."
 sudo apt install -y php php-sqlite3 php-fpm php-curl sqlite3
 
 echo "📦 Загрузка и распаковка Forks Life..."
+sudo chown -R www-data:www-data /var/www/html
 wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
-tar -xzf fork.tar.gz
-rm -f fork.tar.gz
+sudo tar -xzf fork.tar.gz
+sudo rm -f fork.tar.gz
 sudo chown -R www-data:www-data /var/www/html/fork
 
 echo "🧾 Создание стартовой страницы..."
-cat > /var/www/html/index.html <<HTML
+sudo tee   /var/www/html/index.html >/dev/null <<HTML
 <!DOCTYPE html>
 <html><head>
 <style>
@@ -67,7 +68,7 @@ iframe { width: 100%; height: 100%; border: none; }
 div { position: fixed; top: 0; bottom: 0; left: 0; right: 0; }
 </style>
 </head><body>
-<div><iframe id="mF" src="/fork/v.php?ix=w-home"></iframe></div>
+<div><iframe id=mF src=/fork/v.php?ix=w-home></iframe></div>
 </body></html>
 HTML
 
