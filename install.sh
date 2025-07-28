@@ -49,7 +49,7 @@ echo "🔄 Перезапуск NGINX..."
 sudo systemctl restart nginx
 
 echo "📦 Установка PHP, SQLite и зависимостей..."
-sudo apt install -y php php-sqlite3 php-fpm php-curl sqlite3
+sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 
 
 echo "📦 Загрузка и распаковка Forks Life..."
 sudo chown -R www-data:www-data /var/www/html
