@@ -8,12 +8,17 @@ set -e
 echo "🛠 Установка Forks Life Explorer..."
 
 echo "📁 Подготовка каталогов..."
-sudo mkdir -p /var/www/html
+sudo mkdir -p /var/www/html/cgi-bin
+sudo mkdir -p /var/www/html/fork/db
 cd /var/www/html
 
-echo "🌐 Установка NGINX..."
+echo "🌐 Установка NGINX и FastCGI..."
 sudo apt update
-sudo apt install -y nginx
+sudo apt install -y nginx fcgiwrap spawn-fcgi
+
+echo "📦 Установка PHP, SQLite и Python-зависимостей..."
+sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 python3-pip
+sudo pip3 install dbfread
 
 echo "🔧 Настройка NGINX..."
 sudo tee /etc/nginx/sites-available/default >/dev/null <<EOF
@@ -30,8 +35,16 @@ server {
         return 302 /fork;
     }
 
-    location / {
-        try_files \$uri \$uri/ =404;
+    location /cgi-bin/ {
+        gzip off;
+        root /var/www/html;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /var/www/html\$fastcgi_script_name;
+        fastcgi_param QUERY_STRING \$query_string;
+        fastcgi_param REQUEST_METHOD \$request_method;
+        fastcgi_param CONTENT_TYPE \$content_type;
+        fastcgi_param CONTENT_LENGTH \$content_length;
     }
 
     location ~ \.php\$ {
@@ -42,14 +55,18 @@ server {
     location ~ /\.ht {
         deny all;
     }
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
 }
 EOF
 
-echo "🔄 Перезапуск NGINX..."
+echo "🔄 Перезапуск NGINX и fcgiwrap..."
+sudo systemctl enable fcgiwrap
+sudo systemctl restart fcgiwrap
 sudo systemctl restart nginx
-
-echo "📦 Установка PHP, SQLite и зависимостей..."
-sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 
+sudo systemctl restart php*-fpm
 
 echo "📦 Загрузка и распаковка Forks Life..."
 sudo chown -R www-data:www-data /var/www/html
@@ -58,8 +75,25 @@ sudo tar -xzf fork.tar.gz
 sudo rm -f fork.tar.gz
 sudo chown -R www-data:www-data /var/www/html/fork
 
+echo "🐍 Создание примера CGI-скрипта для DBF..."
+sudo tee /var/www/html/cgi-bin/dbf_peers.py >/dev/null <<PY
+#!/usr/bin/env python3
+from dbfread import DBF
+import json
+
+print("Content-Type: application/json\n")
+
+try:
+    records = [r for r in DBF('/var/www/html/fork/db/peers.dbf')]
+    print(json.dumps(records, indent=2, ensure_ascii=False))
+except Exception as e:
+    print(json.dumps({"error": str(e)}))
+PY
+
+sudo chmod +x /var/www/html/cgi-bin/dbf_peers.py
+
 echo "🧾 Создание стартовой страницы..."
-sudo tee   /var/www/html/index.html >/dev/null <<HTML
+sudo tee /var/www/html/index.html >/dev/null <<HTML
 <!DOCTYPE html>
 <html><head>
 <style>
@@ -74,3 +108,4 @@ HTML
 
 echo "✅ Установка завершена."
 echo "🌐 Откройте в браузере: http://localhost/"
+echo "🔍 Пример CGI DBF endpoint: http://localhost/cgi-bin/dbf"
