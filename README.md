@@ -50,31 +50,31 @@ sudo nano /etc/sudoers.d/forks-life-web
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
 
-# BitMemo (BITMEM)
+# BitMeme (BTM)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemewallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bitmemewallet
 
-# Brics (BRC20)
+# Brics (BRI)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bricsd
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bricsd
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bricswallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bricswallet
 
-# Gordian (GORD)
+# Gorbaniov (GOR)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart gord
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable gord
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart gorwallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable gorwallet
 
-# Caspian (CAS)
+# KaspaClassic (CAS)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caspad
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caspad
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caswallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caswallet
 
-# Kaspa V2 (KASV2)
+# Kaspa V2 (KV2)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2wallet
