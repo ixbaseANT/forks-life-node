@@ -34,42 +34,42 @@ sudo nano /etc/sudoers.d/forks-life-web
 Вставьте в открывшийся файл следующий код. Замените www-data на пользователя, от которого работает ваш веб-сервер (nginx/Apache), если это не так.
 
 bash
-# Разрешить управление nginx
+## Разрешить управление nginx
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
 
-# Разрешить управление сервисами форков
-# BitMemo (BITMEM)
+## Разрешить управление сервисами форков
+## BitMemo (BITMEM)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemewallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bitmemewallet
 
-# Brics (BRC20)
+## Brics (BRC20)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bricsd
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bricsd
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bricswallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bricswallet
 
-# Gordian (GORD)
+## Gordian (GORD)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart gord
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable gord
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart gorwallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable gorwallet
 
-# Caspian (CAS)
+## Caspian (CAS)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caspad
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caspad
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caswallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caswallet
 
-# Kaspa V2 (KASV2)
+## Kaspa V2 (KASV2)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2wallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable kasv2wallet
 
-# Kaspa (KAS)
+## Kaspa (KAS)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kaspa
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable kaspa
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kaspawallet
