@@ -37,6 +37,8 @@ bash <(curl -fsSL https://raw.githubusercontent.com/ixbaseANT/forks-life-node/ma
 
 ### Шаг 1. Создайте конфигурацию sudo
 
+Не редактируйте файл /etc/sudoers напрямую. Вместо этого создайте новый файл конфигурации:
+
 ```bash
 sudo nano /etc/sudoers.d/forks-life-web
 ```
