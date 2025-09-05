@@ -35,7 +35,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/ixbaseANT/forks-life-node/ma
 
 ⚠️ **Осторожно!** Это связано с изменением прав доступа.
 
-### Шаг 1. Создайте конфигурацию sudo
+### Шаг 1. Создайте конфигурацию sudo (Рекомендуемый способ)
 
 Не редактируйте файл /etc/sudoers напрямую. Вместо этого создайте новый файл конфигурации:
 
@@ -52,7 +52,7 @@ sudo nano /etc/sudoers.d/forks-life-web
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
 
-# BitMeme (BTM)
+# Bitmeme (BTM)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable bitmemed
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart bitmemewallet
@@ -76,7 +76,7 @@ www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caspad
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caswallet
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable caswallet
 
-# Kaspa V2 (KV2)
+# KaspaV2 (KV2)
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable kasv2d
 www-data ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart kasv2wallet
