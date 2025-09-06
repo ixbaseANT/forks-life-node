@@ -22,7 +22,7 @@ sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 pyt
 echo "🔧 Настройка NGINX..."
 sudo tee /etc/nginx/sites-available/default >/dev/null <<EOF
 server {
-    listen 80 default_server;a
+    listen 80 default_server;
     listen [::]:80 default_server;
 
     root /var/www/html;
