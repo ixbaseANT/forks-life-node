@@ -18,7 +18,7 @@ sudo apt install -y nginx fcgiwrap spawn-fcgi
 
 echo "📦 Установка PHP, SQLite и Python-зависимостей..."
 sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 python3-pip
-sudo apt install python3.11-venv
+sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv..."
 cd /var/www/html/fork
