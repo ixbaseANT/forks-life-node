@@ -80,6 +80,7 @@ sudo chown -R www-data:www-data /var/www/html
 sudo wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
 sudo tar -xzf fork.tar.gz
 sudo rm -f fork.tar.gz
+sudo cp /var/www/html/fork/index-fork.html /var/www/html/index.html
 sudo chown -R www-data:www-data /var/www/html/fork
 
 echo "✅ Установка завершена."
