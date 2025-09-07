@@ -27,6 +27,7 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install bip-utils
 deactivate
+cd /var/www/html
 
 echo "🔧 Настройка NGINX..."
 sudo tee /etc/nginx/sites-available/default >/dev/null <<EOF
