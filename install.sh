@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Forks Life Node Installer
-# https://github.com/YOUR_USER/forks-life-node
+# https://github.com/ixbaseANT/forks-life-node
 
 set -e
 
