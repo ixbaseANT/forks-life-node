@@ -94,15 +94,22 @@ sudo mkdir -p /var/www/html/fork/db
 sudo chown www-data:www-data /var/www/html/fork/db
 sudo chmod 700 /var/www/html/fork/db
 
+# Спросим данные с дефолтами
+read -p "Введите APP_USER (по умолчанию: user): " APP_USER
+APP_USER=${APP_USER:-user}
+
+read -p "Введите APP_PASS (по умолчанию: 12!): " APP_PASS
+APP_PASS=${APP_PASS:-12!}
+
+read -p "Введите SYS_USER (по умолчанию: admin): " SYS_USER
+SYS_USER=${SYS_USER:-admin}
+
+read -p "Введите SYS_PASS (по умолчанию: !21): " SYS_PASS
+SYS_PASS=${SYS_PASS:-!21}
+
 # Определяем текущего пользователя и его домашнюю папку
 CURRENT_USER=$(whoami)
 CURRENT_HOME=$HOME
-
-# Берём значения из окружения или ставим дефолты
-APP_USER=${APP_USER:-user}
-APP_PASS=${APP_PASS:-12!}
-SYS_USER=${SYS_USER:-admin}
-SYS_PASS=${SYS_PASS:-!21}
 
 # Дополнительно сохраняем имя текущего пользователя и его home
 HOST_USER=$CURRENT_USER
