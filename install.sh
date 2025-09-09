@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Forks Life Node Installer
+# Forks Life Node Installer (non-interactive)
 # https://github.com/ixbaseANT/forks-life-node
 
 set -e
 
-echo "🛠 Установка Forks Life Explorer..."
+echo "🛠 Установка Forks Life Explorer (non-interactive)..."
 
 echo "📁 Подготовка каталогов..."
 sudo mkdir -p /var/www/html/cgi-bin
@@ -21,8 +21,14 @@ sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 pyt
 sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv..."
+sudo -u www-data bash -c '
 cd /var/www/html/fork
-sudo python3 -m venv venv
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install bip-utils
+deactivate
+'
 cd /var/www/html
 
 echo "🔧 Настройка NGINX..."
@@ -88,35 +94,41 @@ sudo mkdir -p /var/www/html/fork/db
 sudo chown www-data:www-data /var/www/html/fork/db
 sudo chmod 700 /var/www/html/fork/db
 
-# Спросим данные с дефолтами
-read -p "Введите APP_USER (по умолчанию: user): " APP_USER
+# Определяем текущего пользователя и его домашнюю папку
+CURRENT_USER=$(whoami)
+CURRENT_HOME=$HOME
+
+# Берём значения из окружения или ставим дефолты
 APP_USER=${APP_USER:-user}
-
-read -p "Введите APP_PASS (по умолчанию: 12!): " APP_PASS
 APP_PASS=${APP_PASS:-12!}
-
-read -p "Введите SYS_USER (по умолчанию: admin): " SYS_USER
 SYS_USER=${SYS_USER:-admin}
-
-read -p "Введите SYS_PASS (по умолчанию: !21): " SYS_PASS
 SYS_PASS=${SYS_PASS:-!21}
 
-# Записываем креды в файл (ограниченный доступ)
+# Дополнительно сохраняем имя текущего пользователя и его home
+HOST_USER=$CURRENT_USER
+HOST_HOME=$CURRENT_HOME
+
 CRED_FILE="/var/www/html/fork/db/credentials.env"
 
 cat <<EOF | sudo tee $CRED_FILE >/dev/null
-# Forks Life credentials
+# Forks Life credentials (non-interactive install)
 APP_USER=$APP_USER
 APP_PASS=$APP_PASS
 SYS_USER=$SYS_USER
 SYS_PASS=$SYS_PASS
+
+# System info
+HOST_USER=$HOST_USER
+HOST_HOME=$HOST_HOME
 EOF
 
 sudo chown root:www-data $CRED_FILE
 sudo chmod 640 $CRED_FILE
 
 echo "✅ Логины/пароли сохранены в $CRED_FILE (чтение только root и www-data)"
+echo "ℹ️ Использован пользователь: $HOST_USER, домашняя папка: $HOST_HOME"
 
 echo "✅ Установка завершена."
 echo "🌐 Откройте в браузере: http://localhost/"
 echo "🔍 Пример CGI DBF endpoint: http://localhost/cgi-bin/dbf"
+
