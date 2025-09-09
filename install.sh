@@ -21,15 +21,21 @@ sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 pyt
 sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv от имени www-data..."
-sudo -u www-data bash -c '
+# Временно дать себе права
+sudo chown -R $USER:www-data /var/www/html/fork
+sudo chmod -R 775 /var/www/html/fork
+
+# Собрать venv
 cd /var/www/html/fork
 python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
 pip install bip-utils
 deactivate
-'
-cd /var/www/html
+
+# Вернуть www-data владельцем
+sudo chown -R www-data:www-data /var/www/html/fork
+sudo chmod -R 755 /var/www/html/forkcd /var/www/html
 
 echo "🔧 Настройка NGINX..."
 sudo tee /etc/nginx/sites-available/default >/dev/null <<EOF
