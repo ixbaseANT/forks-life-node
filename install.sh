@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 # Forks Life Node Installer
 # https://github.com/ixbaseANT/forks-life-node
@@ -22,8 +22,8 @@ sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv..."
 cd /var/www/html/fork
-python3 -m venv venv
-sudo source venv/bin/activate
+sudo python3 -m venv venv
+source venv/bin/activate
 pip install --upgrade pip
 pip install bip-utils
 deactivate
