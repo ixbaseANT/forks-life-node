@@ -58,7 +58,7 @@ server {
 
     location ~ \.php\$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/run/php/php-fpm.sock;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
     }
 
     location ~ /\.ht {
@@ -82,8 +82,99 @@ sudo chown -R www-data:www-data /var/www/html
 sudo wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
 sudo tar -xzf fork.tar.gz
 sudo rm -f fork.tar.gz
-sudo cp /var/www/html/fork/index-fork.html /var/www/html/index.html
 sudo chown -R www-data:www-data /var/www/html/fork
+
+echo "🔑 Настройка логинов и паролей..."
+
+# Папка под приватные данные
+sudo mkdir -p /var/www/html/fork/db
+sudo chown www-data:www-data /var/www/html/fork/db
+sudo chmod 700 /var/www/html/fork/db
+
+# Определяем текущего пользователя и его домашнюю папку
+CURRENT_USER=$(whoami)
+CURRENT_HOME=$HOME
+
+# Берём значения из окружения или ставим дефолты
+APP_USER=${APP_USER:-user}
+APP_PASS=${APP_PASS:-12!}
+SYS_USER=${SYS_USER:-admin}
+SYS_PASS=${SYS_PASS:-!21}
+
+# Дополнительно сохраняем имя текущего пользователя и его home
+HOST_USER=$CURRENT_USER
+HOST_HOME=$CURRENT_HOME
+
+CRED_FILE="/var/www/html/fork/db/credentials.env"
+
+cat <<EOF | sudo tee $CRED_FILE >/dev/null
+# Forks Life credentials (non-interactive install)
+APP_USER=$APP_USER
+APP_PASS=$APP_PASS
+SYS_USER=$SYS_USER
+SYS_PASS=$SYS_PASS
+
+# System info
+HOST_USER=$HOST_USER
+HOST_HOME=$HOST_HOME
+EOF
+
+sudo chown root:www-data $CRED_FILE
+sudo chmod 640 $CRED_FILE
+
+echo "🌐 Создание стартовой страницы с системной информацией..."
+sudo tee /var/www/html/index.php >/dev/null <<'EOF'
+<?php
+$credFile = "/var/www/html/fork/db/credentials.env";
+$creds = [];
+if (file_exists($credFile)) {
+    $lines = file($credFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos($line, "=") !== false && substr(trim($line), 0, 1) !== "#") {
+            list($k, $v) = explode("=", $line, 2);
+            $creds[$k] = $v;
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Forks Life Node — Системная информация</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { color: #444; }
+    table { border-collapse: collapse; width: 60%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #f0f0f0; text-align: left; }
+  </style>
+</head>
+<body>
+  <h2>🚀 Forks Life Node — Системная информация</h2>
+  <table>
+    <tr><th>APP_USER</th><td><?= htmlspecialchars($creds['APP_USER'] ?? '') ?></td></tr>
+    <tr><th>APP_PASS</th><td><?= htmlspecialchars($creds['APP_PASS'] ?? '') ?></td></tr>
+    <tr><th>SYS_USER</th><td><?= htmlspecialchars($creds['SYS_USER'] ?? '') ?></td></tr>
+    <tr><th>SYS_PASS</th><td><?= htmlspecialchars($creds['SYS_PASS'] ?? '') ?></td></tr>
+    <tr><th>HOST_USER</th><td><?= htmlspecialchars($creds['HOST_USER'] ?? '') ?></td></tr>
+    <tr><th>HOST_HOME</th><td><?= htmlspecialchars($creds['HOST_HOME'] ?? '') ?></td></tr>
+  </table>
+  <br>
+  <a href="/fork/index-fork.html">🔗 Перейти к Explorer</a>
+</body>
+</html>
+EOF
+
+echo
+echo "📋 Итоговые параметры:"
+echo "  APP_USER  = $APP_USER"
+echo "  APP_PASS  = $APP_PASS"
+echo "  SYS_USER  = $SYS_USER"
+echo "  SYS_PASS  = $SYS_PASS"
+echo "  HOST_USER = $HOST_USER"
+echo "  HOST_HOME = $HOST_HOME"
+echo
 
 echo "✅ Установка завершена."
 echo "🌐 Откройте в браузере: http://localhost/"
