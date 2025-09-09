@@ -21,6 +21,7 @@ sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 pyt
 sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv..."
+sudo -u www-data bash -c '
 cd /var/www/html/fork
 python3 -m venv venv
 source venv/bin/activate
