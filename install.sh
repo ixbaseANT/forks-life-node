@@ -131,4 +131,5 @@ echo "ℹ️ Использован пользователь: $HOST_USER, дом
 echo "✅ Установка завершена."
 echo "🌐 Откройте в браузере: http://localhost/"
 echo "🔍 Пример CGI DBF endpoint: http://localhost/cgi-bin/dbf"
+firefox "https://www.google.com" &
 
