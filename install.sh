@@ -20,17 +20,6 @@ echo "📦 Установка PHP, SQLite и Python-зависимостей..."
 sudo apt install -y php php-sqlite3 php-fpm php-curl php-xml sqlite3 python3 python3-pip
 sudo apt install python3.11-venv -y
 
-echo "🐍 Создание Python venv..."
-sudo -u www-data bash -c '
-cd /var/www/html/fork
-python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install bip-utils
-deactivate
-'
-cd /var/www/html
-
 echo "🔧 Настройка NGINX..."
 sudo tee /etc/nginx/sites-available/default >/dev/null <<EOF
 server {
@@ -86,6 +75,17 @@ sudo tar -xzf fork.tar.gz
 sudo rm -f fork.tar.gz
 sudo cp /var/www/html/fork/index-fork.html /var/www/html/index.html
 sudo chown -R www-data:www-data /var/www/html/fork
+
+echo "🐍 Создание Python venv..."
+sudo -u www-data bash -c '
+cd /var/www/html/fork
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install bip-utils
+deactivate
+'
+cd /var/www/html
 
 echo "🔑 Настройка логинов и паролей..."
 
