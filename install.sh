@@ -22,11 +22,7 @@ sudo apt install python3.11-venv -y
 
 echo "🐍 Создание Python venv..."
 cd /var/www/html/fork
-python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install bip-utils
-deactivate
+sudo python3 -m venv venv
 cd /var/www/html
 
 echo "🔧 Настройка NGINX..."
