@@ -70,6 +70,7 @@ sudo systemctl restart nginx
 sudo systemctl restart php*-fpm
 
 echo "📦 Загрузка и распаковка Forks Life..."
+sudo chown -R www-data:www-data /var/www/utx
 sudo chown -R www-data:www-data /var/www/html
 sudo wget -N https://forks.life/fork.tar.gz -O fork.tar.gz
 sudo tar -xzf fork.tar.gz
