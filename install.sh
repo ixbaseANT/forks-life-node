@@ -8,6 +8,7 @@ set -e
 echo "🛠 Установка Forks Life Explorer (non-interactive)..."
 
 echo "📁 Подготовка каталогов..."
+sudo mkdir -p /var/www/utx
 sudo mkdir -p /var/www/html/cgi-bin
 sudo mkdir -p /var/www/html/fork/db
 cd /var/www/html
