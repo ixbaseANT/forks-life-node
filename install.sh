@@ -33,7 +33,7 @@ server {
     server_name _;
 
     location /fork/db {
-        return 302 /fork;
+        deny all;
     }
 
     location /cgi-bin/ {
