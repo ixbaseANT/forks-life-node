@@ -117,7 +117,7 @@ CURRENT_HOME=$HOME
 HOST_USER=$CURRENT_USER
 HOST_HOME=$CURRENT_HOME
 
-CRED_FILE="/var/www/html/fork/db/credentials.env"
+CRED_FILE="/var/www/utx/credentials.env"
 
 cat <<EOF | sudo tee $CRED_FILE >/dev/null
 # Forks Life credentials (non-interactive install)
