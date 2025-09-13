@@ -91,7 +91,7 @@ cd /var/www/html
 
 echo "🔑 Настройка логинов и паролей..."
 
-# Папка под приватные данные
+# Папка под системные данные
 sudo mkdir -p /var/www/html/fork/db
 sudo chown www-data:www-data /var/www/html/fork/db
 sudo chmod 700 /var/www/html/fork/db
